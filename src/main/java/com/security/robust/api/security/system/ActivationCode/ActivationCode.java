@@ -22,7 +22,7 @@ public class ActivationCode {
     private LocalDateTime createdAt;
     private LocalDateTime usedAt;
     private LocalDateTime expiresAt;
-    // Linking attributes :
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

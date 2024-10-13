@@ -22,7 +22,7 @@ public class RecoveryCode {
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
     private boolean used;
-    // Linking attributes :
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

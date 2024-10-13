@@ -32,7 +32,6 @@ public class Authority {
     @Column(insertable = false)
     private LocalDateTime updatedAt;
 
-    // linking attributes :
     @ManyToMany(mappedBy = "auths")
     @JsonIgnore
     private List<User> users;

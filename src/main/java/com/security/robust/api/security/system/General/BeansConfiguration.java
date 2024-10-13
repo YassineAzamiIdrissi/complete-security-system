@@ -24,13 +24,11 @@ import static org.springframework.http.HttpHeaders.*;
 public class BeansConfiguration {
     private final UserDetailsService userDetailsService;
 
-    // password encoder :
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // authentication manager :
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authConfig
@@ -38,7 +36,6 @@ public class BeansConfiguration {
         return authConfig.getAuthenticationManager();
     }
 
-    // authentication provider :
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -47,8 +44,6 @@ public class BeansConfiguration {
         return authProvider;
     }
 
-    // Cors config (http reqs permission from our Angular app)
-    // to be customized based on the used client :
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
