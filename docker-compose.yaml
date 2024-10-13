@@ -1,0 +1,33 @@
+version: "3"
+services:
+  mailing-service:
+    image: maildev/maildev
+    container_name: mailing-ser-0
+    ports:
+      - 1025:1025
+      - 1080:1080
+    networks:
+      - app-network
+    restart: unless-stopped
+  storage-service:
+    image: postgres
+    container_name: postgres_container
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: yassine
+      POSTGRES_DB: draft
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/data/postgres
+    networks:
+      - app-network
+    restart: unless-stopped
+
+volumes:
+  postgres:
+
+networks:
+  app-network:
+    driver: bridge
