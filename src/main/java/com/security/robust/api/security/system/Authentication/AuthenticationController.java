@@ -36,4 +36,30 @@ public class AuthenticationController {
         return ResponseEntity.ok().
                 build();
     }
+
+    @PostMapping("demand-recovery")
+    ResponseEntity<?> demandRecovery
+            (@RequestParam(name = "email") String email)
+            throws MessagingException {
+        authService.demandRecovery(email);
+        return ResponseEntity.ok().
+                build();
+    }
+
+    @GetMapping("check-recovery")
+    ResponseEntity<?> checkRecovery(
+            @RequestParam(name = "recovery") String recovery
+    ) throws MessagingException {
+        authService.checkCodeValidity(recovery);
+        return ResponseEntity.ok().
+                build();
+    }
+
+    @PatchMapping("set-new-password")
+    ResponseEntity<?> setNewPassword
+            (@Valid @RequestBody NewPasswordCouple couple,
+             @RequestParam(name = "code") String code) {
+        authService.setNewPassword(couple, code);
+        return ResponseEntity.ok().build();
+    }
 }

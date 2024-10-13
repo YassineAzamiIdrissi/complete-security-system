@@ -4,11 +4,9 @@ import com.security.robust.api.security.system.ActivationCode.ActivationCode;
 import com.security.robust.api.security.system.ActivationCode.ActivationCodeRepository;
 import com.security.robust.api.security.system.Authority.Authority;
 import com.security.robust.api.security.system.Authority.AuthorityRepository;
-import com.security.robust.api.security.system.CustomExceptions.ActivationCodeExpiredException;
-import com.security.robust.api.security.system.CustomExceptions.ActivationCodeNotFoundException;
-import com.security.robust.api.security.system.CustomExceptions.AuthorityNotFoundException;
-import com.security.robust.api.security.system.CustomExceptions.UserNotFoundException;
+import com.security.robust.api.security.system.CustomExceptions.*;
 import com.security.robust.api.security.system.Email.EmailService;
+import com.security.robust.api.security.system.RecoveryCode.RecoveryCode;
 import com.security.robust.api.security.system.RecoveryCode.RecoveryCodeRepository;
 import com.security.robust.api.security.system.Security.JwtFilter;
 import com.security.robust.api.security.system.Security.JwtService;
@@ -27,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.security.robust.api.security.system.Email.EmailTemplate.ACTIVATE_ACCOUNT;
 
@@ -50,6 +49,54 @@ public class AuthenticationService {
     private String recoveryLink;
     @Value("${application.links.activation}")
     private String activationLink;
+
+
+    public void setNewPassword(NewPasswordCouple couple, String code) {
+        RecoveryCode savedCode = recoveryRepo.findByRecoveryCode
+                (code).orElseThrow
+                (() -> new RecoveryCodeNotFoundException
+                        ("Recovery code " + code + " is incorrect"));
+        if (!savedCode.isUsed()) {
+            throw new RuntimeException("This code isn't validated by the user yet");
+        }
+        User concernedUser = savedCode.getUser();
+        if (!Objects.equals(couple.getNewPassword(), couple.getConfirmNewPassword())) {
+            throw new PasswordsMismatchException
+                    ("Passwords do not match");
+        }
+        concernedUser.setPassword(passwordEncoder.encode(couple.getNewPassword()));
+        userRepo.save(concernedUser);
+    }
+
+    public void checkCodeValidity(String code)
+            throws MessagingException {
+        RecoveryCode recoveryCode = recoveryRepo.findByRecoveryCode(code).
+                orElseThrow(() -> new
+                        RecoveryCodeNotFoundException("Code " + code + " isn't valid"));
+        if (recoveryCode.getExpiresAt().isBefore(LocalDateTime.now())) {
+            demandRecovery(recoveryCode.getUser().getEmail());
+            throw new RecoveryCodeExpiredException
+                    ("Code " + code + " expired a new one has been already sent");
+        }
+        recoveryCode.setUsed(true);
+        recoveryRepo.save(recoveryCode);
+    }
+
+    public void demandRecovery(String email)
+            throws MessagingException {
+        User concernedUser = userRepo.findByEmail(email).
+                orElseThrow(() -> new UserNotFoundException
+                        ("Email " + email + " doesn't concern any existing user..."));
+        String recoveryCode = generateAndSaveRecoveryCode(concernedUser);
+        emailService.sendEmail(
+                concernedUser.getEmail(),
+                concernedUser.generateFullName(),
+                null,
+                recoveryCode,
+                recoveryLink,
+                "Recover your password"
+        );
+    }
 
     public AuthenticationResponse authenticate(
             AuthenticationRequest authRequest
@@ -121,6 +168,19 @@ public class AuthenticationService {
                 activationLink,
                 "Account activation"
         );
+    }
+
+    private String generateAndSaveRecoveryCode(User user) {
+        String recovery = generateCode(10);
+        RecoveryCode recoveryCode = RecoveryCode.
+                builder().
+                createdAt(LocalDateTime.now()).
+                expiresAt(LocalDateTime.now().plusMinutes(15)).
+                recoveryCode(recovery).
+                user(user).
+                build();
+        recoveryRepo.save(recoveryCode);
+        return recovery;
     }
 
     private String generateAndSaveActivationCode(User user) {

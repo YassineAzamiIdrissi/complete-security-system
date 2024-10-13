@@ -1,9 +1,6 @@
 package com.security.robust.api.security.system.GlobalExceptionsHandler;
 
-import com.security.robust.api.security.system.CustomExceptions.ActivationCodeExpiredException;
-import com.security.robust.api.security.system.CustomExceptions.ActivationCodeNotFoundException;
-import com.security.robust.api.security.system.CustomExceptions.AuthorityNotFoundException;
-import com.security.robust.api.security.system.CustomExceptions.UserNotFoundException;
+import com.security.robust.api.security.system.CustomExceptions.*;
 import com.security.robust.api.security.system.GlobalExceptionsHandler.ExceptionResponseDto.ExceptionResp;
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
@@ -56,6 +53,26 @@ public class GlobalExceptionsHandler {
         ExceptionResp resp = new ExceptionResp();
         resp.setMessage(exp.getMessage());
         return ResponseEntity.status(404).
+                body(resp);
+    }
+
+    @ExceptionHandler(RecoveryCodeNotFoundException.class)
+    ResponseEntity<ExceptionResp> handleRecoveryCodeNotFoundException(
+            RecoveryCodeNotFoundException exp
+    ) {
+        ExceptionResp resp = new ExceptionResp();
+        resp.setMessage(exp.getMessage());
+        return ResponseEntity.status(404).
+                body(resp);
+    }
+
+    @ExceptionHandler(RecoveryCodeExpiredException.class)
+    ResponseEntity<ExceptionResp> handleRecoveryCodeExpiredException(
+            RecoveryCodeExpiredException exp
+    ) {
+        ExceptionResp resp = new ExceptionResp();
+        resp.setMessage(exp.getMessage());
+        return ResponseEntity.status(GONE).
                 body(resp);
     }
 }
