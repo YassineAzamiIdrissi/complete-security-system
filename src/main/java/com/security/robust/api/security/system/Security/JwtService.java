@@ -22,9 +22,9 @@ import static java.lang.System.currentTimeMillis;
 @Service
 @RequiredArgsConstructor
 public class JwtService {
-    @Value("${spring.application.security.jwt.secret-key}")
+    @Value("${application.security.jwt.secret-key}")
     private String secretKey;
-    @Value("${spring.application.security.jwt.expiration}")
+    @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -57,12 +57,12 @@ public class JwtService {
                 getBody();
     }
 
-    private String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails) {
         return generateToken(userDetails, new HashMap<>());
     }
 
-    private String generateToken(UserDetails userDetails,
-                                 Map<String, Object> extraClaims) {
+    public String generateToken(UserDetails userDetails,
+                                Map<String, Object> extraClaims) {
         return buildToken(userDetails, extraClaims, jwtExpiration);
     }
 

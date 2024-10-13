@@ -8,11 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +27,7 @@ import java.util.stream.Collectors;
 @Table(name = "__user")
 @Builder
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class User implements Principal, UserDetails {
     @Id
     @GeneratedValue
@@ -35,7 +40,13 @@ public class User implements Principal, UserDetails {
     private boolean locked;
     private boolean enabled;
 
-    // linking attributes :
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_auths",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -89,5 +100,10 @@ public class User implements Principal, UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    // utility method :
+    public String generateFullName() {
+        return firstname + " " + lastname;
     }
 }
