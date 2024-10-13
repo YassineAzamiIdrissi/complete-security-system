@@ -2,6 +2,7 @@ package com.security.robust.api.security.system.User;
 
 import com.security.robust.api.security.system.ActivationCode.ActivationCode;
 import com.security.robust.api.security.system.Authority.Authority;
+import com.security.robust.api.security.system.Dummy.Car;
 import com.security.robust.api.security.system.RecoveryCode.RecoveryCode;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -63,6 +64,9 @@ public class User implements Principal, UserDetails {
             mappedBy = "user",
             cascade = CascadeType.ALL)
     private List<RecoveryCode> recoveryCodes;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Car> cars;
 
     @Override
     public String getName() {
