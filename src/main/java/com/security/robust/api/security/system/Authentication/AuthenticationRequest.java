@@ -19,6 +19,5 @@ public class AuthenticationRequest {
     @NotNull(message = "password has to be specifier")
     @NotEmpty(message = "password can't be empty")
     @NotBlank(message = "password can't be blank")
-    @Size(min = 8, message = "Password must be have a minimum size of 8 characters")
     private String password;
 }

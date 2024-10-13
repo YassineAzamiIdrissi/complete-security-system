@@ -3,7 +3,9 @@ package com.security.robust.api.security.system.GlobalExceptionsHandler;
 import com.security.robust.api.security.system.CustomExceptions.*;
 import com.security.robust.api.security.system.GlobalExceptionsHandler.ExceptionResponseDto.ExceptionResp;
 import jakarta.mail.MessagingException;
+import lombok.Locked;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -108,6 +110,16 @@ public class GlobalExceptionsHandler {
         ExceptionResp resp = new ExceptionResp();
         resp.setMessage("Account is currently locked, consider contacting an admin");
         return ResponseEntity.status(403).
+                body(resp);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    ResponseEntity<ExceptionResp> handleBadCredentialsException(
+            BadCredentialsException exp
+    ) {
+        ExceptionResp resp = new ExceptionResp();
+        resp.setMessage("Email or password is incorrect..");
+        return ResponseEntity.status(400).
                 body(resp);
     }
 }
