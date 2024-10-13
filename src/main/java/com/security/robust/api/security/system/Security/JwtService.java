@@ -75,9 +75,12 @@ public class JwtService {
                 getAuthorities().stream().
                 map(GrantedAuthority::getAuthority).
                 toList();
+        System.out.println("DISSIZ THE EMAAIIIIIL :::: ");
+        System.out.println(userDetails.getUsername());
+        System.out.println("DISSIZ THE EMAAIIIIIL :::: ");
         return Jwts.builder().
-                setSubject(userDetails.getUsername()).
                 setClaims(extraClaims).
+                setSubject(userDetails.getUsername()).
                 setIssuedAt(new Date(currentTimeMillis())).
                 setExpiration(new Date(currentTimeMillis() + jwtExp)).
                 signWith(generateSignInKey()).

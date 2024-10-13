@@ -9,7 +9,6 @@ import com.security.robust.api.security.system.CustomExceptions.ActivationCodeNo
 import com.security.robust.api.security.system.CustomExceptions.AuthorityNotFoundException;
 import com.security.robust.api.security.system.CustomExceptions.UserNotFoundException;
 import com.security.robust.api.security.system.Email.EmailService;
-import com.security.robust.api.security.system.Email.EmailTemplate;
 import com.security.robust.api.security.system.RecoveryCode.RecoveryCodeRepository;
 import com.security.robust.api.security.system.Security.JwtFilter;
 import com.security.robust.api.security.system.Security.JwtService;
@@ -18,7 +17,6 @@ import com.security.robust.api.security.system.User.UserRepository;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +27,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static com.security.robust.api.security.system.Email.EmailTemplate.ACTIVATE_ACCOUNT;
 

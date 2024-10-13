@@ -29,7 +29,7 @@ public class AuthenticationController {
                 (authService.authenticate(request));
     }
 
-    @GetMapping("activate-account}")
+    @GetMapping("activate-account")
     ResponseEntity<?> activateAccount(@RequestParam(name = "activation_code")
                                       String activationCode) throws MessagingException {
         authService.activateAccount(activationCode);
