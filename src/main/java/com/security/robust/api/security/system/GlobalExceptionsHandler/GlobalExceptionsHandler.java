@@ -3,10 +3,15 @@ package com.security.robust.api.security.system.GlobalExceptionsHandler;
 import com.security.robust.api.security.system.CustomExceptions.*;
 import com.security.robust.api.security.system.GlobalExceptionsHandler.ExceptionResponseDto.ExceptionResp;
 import jakarta.mail.MessagingException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.springframework.http.HttpStatus.GONE;
 
@@ -73,6 +78,36 @@ public class GlobalExceptionsHandler {
         ExceptionResp resp = new ExceptionResp();
         resp.setMessage(exp.getMessage());
         return ResponseEntity.status(GONE).
+                body(resp);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    ResponseEntity<ExceptionResp> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException exp
+    ) {
+        ExceptionResp resp = new ExceptionResp();
+        Set<String> errors = new HashSet<>();
+        exp.getBindingResult().getAllErrors().forEach(error -> {
+            errors.add(error.getDefaultMessage());
+        });
+        resp.setErrors(errors);
+        return ResponseEntity.status(400).
+                body(resp);
+    }
+
+    @ExceptionHandler(DisabledException.class)
+    ResponseEntity<ExceptionResp> handleDisabledException(DisabledException exp) {
+        ExceptionResp resp = new ExceptionResp();
+        resp.setMessage("Account is currently disabled");
+        return ResponseEntity.status(403).
+                body(resp);
+    }
+
+    @ExceptionHandler(LockedException.class)
+    ResponseEntity<ExceptionResp> handleLockedException(LockedException exp) {
+        ExceptionResp resp = new ExceptionResp();
+        resp.setMessage("Account is currently locked, consider contacting an admin");
+        return ResponseEntity.status(403).
                 body(resp);
     }
 }
