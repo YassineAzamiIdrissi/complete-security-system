@@ -22,8 +22,7 @@ export class CheckRecoveryComponent {
       recovery: code
     }).subscribe({
       next: (resp) => {
-        console.log("Code is correct");
-        // going to the new password page...
+        this.router.navigate(['set-new-pass', code]);
       },
       error: (err) => {
         this.errorMessage = err.error.message;

@@ -11,6 +11,7 @@ import { ActivateAccountComponent } from './pages/activate-account/activate-acco
 import {CodeInputModule} from "angular-code-input";
 import { PasswordRecoveryDemandComponent } from './pages/password-recovery-demand/password-recovery-demand.component';
 import { CheckRecoveryComponent } from './pages/check-recovery/check-recovery.component';
+import { SetNewPassComponent } from './pages/set-new-pass/set-new-pass.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CheckRecoveryComponent } from './pages/check-recovery/check-recovery.co
     RegisterComponent,
     ActivateAccountComponent,
     PasswordRecoveryDemandComponent,
-    CheckRecoveryComponent
+    CheckRecoveryComponent,
+    SetNewPassComponent
   ],
   imports: [
     BrowserModule,

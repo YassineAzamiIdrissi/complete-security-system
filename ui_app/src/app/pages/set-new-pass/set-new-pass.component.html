@@ -1,0 +1,40 @@
+<div class="center-wrapper">
+  <form class="form-shadow">
+    <h4 class="text-primary text-center mb-4">Set a new password : </h4>
+    <div class="alert alert-danger" role="alert" *ngIf="errors.length">
+      <p class="m-0 p-0" *ngFor="let error of errors">
+        {{ error }}
+      </p>
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="actionMessage && witness">
+      <p class="m-0 p-0">{{ actionMessage }} login now : </p>
+      <button class="btn btn-link" (click)="goToLogin()">Login</button>
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="actionMessage && !witness">
+      <p class="m-0 p-0">{{ actionMessage }}</p>
+    </div>
+    <div class="mb-3">
+      <label for="newpass" class="form-label">New password</label>
+      <input type="password" class="form-control"
+             id="newpass"
+             aria-describedby="emailHelp"
+             [(ngModel)]="passwordsSet.newPassword"
+             name="newpass_inp"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="confnewpass" class="form-label">Confirm new password</label>
+      <input type="password" class="form-control"
+             id="confnewpass"
+             aria-describedby="emailHelp"
+             [(ngModel)]="passwordsSet.confirmNewPassword"
+             name="confnewpass_inp"
+      >
+    </div>
+    <div class="mb-3 d-flex align-items-center justify-content-between">
+      <button class="btn btn-primary" type="submit" (click)="setNewPassword()">Set password
+      </button>
+    </div>
+  </form>
+</div>
+

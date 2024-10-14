@@ -44,6 +44,15 @@ public class GlobalExceptionsHandler {
                 body(resp);
     }
 
+    @ExceptionHandler(PasswordsMismatchException.class)
+    ResponseEntity<ExceptionResp> handlePasswordsMismatchException
+            (PasswordsMismatchException exp) {
+        ExceptionResp resp = new ExceptionResp();
+        resp.setMessage(exp.getMessage());
+        return ResponseEntity.status(403).
+                body(resp);
+    }
+
     @ExceptionHandler(ActivationCodeExpiredException.class)
     ResponseEntity<ExceptionResp> handleActivationCodeExpiredException(
             ActivationCodeExpiredException exp) {

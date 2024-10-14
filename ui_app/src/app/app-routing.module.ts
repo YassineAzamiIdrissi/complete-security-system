@@ -5,6 +5,7 @@ import {RegisterComponent} from "./pages/register/register.component";
 import {ActivateAccountComponent} from "./pages/activate-account/activate-account.component";
 import {PasswordRecoveryDemandComponent} from "./pages/password-recovery-demand/password-recovery-demand.component";
 import {CheckRecoveryComponent} from "./pages/check-recovery/check-recovery.component";
+import {SetNewPassComponent} from "./pages/set-new-pass/set-new-pass.component";
 
 const routes: Routes = [
     {
@@ -31,6 +32,10 @@ const routes: Routes = [
     {
       path: "check-recovery",
       component: CheckRecoveryComponent
+    },
+    {
+      path: "set-new-pass/:code",
+      component: SetNewPassComponent
     }
   ]
 ;
