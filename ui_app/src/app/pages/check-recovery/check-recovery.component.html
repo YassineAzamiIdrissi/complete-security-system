@@ -1,1 +1,25 @@
-<p>check-recovery works!</p>
+<div class="center-wrapper" *ngIf="!submitted else done">
+  <form class="form-shadow">
+    <h4 class="text-danger text-center mb-4">Write the received code : </h4>
+    <div class="mb-3">
+      <h4 class="text-primary">Write the code you received in Email </h4>
+      <code-input [isCodeHidden]="false"
+                  [codeLength]="10"
+                  (codeCompleted)="checkCode($event)"
+      ></code-input>
+    </div>
+    <div class="mb-3 d-flex align-items-center justify-content-between">
+      <button class="btn btn-primary" type="submit">Recover
+      </button>
+    </div>
+  </form>
+</div>
+<ng-template #done>
+  <div class="center-wrapper">
+    <div class="d-flex align-items-center flex-column" *ngIf="errorMessage">
+      <h1 class="text-danger">{{ errorMessage }}</h1>
+      <button class="btn btn-warning" (click)="submitted = false">Try again</button>
+    </div>
+  </div>
+</ng-template>
+
