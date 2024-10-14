@@ -52,4 +52,8 @@ export class LoginComponent {
   moveToRegister() {
     this.router.navigate(["register"]);
   }
+
+  startRecovery() {
+    this.router.navigate(["demand-recovery"]);
+  }
 }

@@ -39,9 +39,9 @@ public class AuthenticationController {
 
     @PostMapping("demand-recovery")
     ResponseEntity<?> demandRecovery
-            (@RequestParam(name = "email") String email)
+            (@Valid @RequestBody EmailRequest request)
             throws MessagingException {
-        authService.demandRecovery(email);
+        authService.demandRecovery(request);
         return ResponseEntity.ok().
                 build();
     }

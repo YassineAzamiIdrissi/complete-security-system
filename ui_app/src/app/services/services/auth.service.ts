@@ -67,7 +67,7 @@ export class AuthService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `demandRecovery()` instead.
    *
-   * This method doesn't expect any request body.
+   * This method sends `application/json` and handles request body of type `application/json`.
    */
   demandRecovery$Response(params: DemandRecovery$Params, context?: HttpContext): Observable<StrictHttpResponse<{
 }>> {
@@ -78,7 +78,7 @@ export class AuthService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `demandRecovery$Response()` instead.
    *
-   * This method doesn't expect any request body.
+   * This method sends `application/json` and handles request body of type `application/json`.
    */
   demandRecovery(params: DemandRecovery$Params, context?: HttpContext): Observable<{
 }> {

@@ -72,7 +72,9 @@ public class AuthenticationService {
                 orElseThrow(() -> new
                         RecoveryCodeNotFoundException("Code " + code + " isn't valid"));
         if (recoveryCode.getExpiresAt().isBefore(LocalDateTime.now())) {
-            demandRecovery(recoveryCode.getUser().getEmail());
+            EmailRequest req = new EmailRequest();
+            req.setEmail(recoveryCode.getUser().getEmail());
+            demandRecovery(req);
             throw new RecoveryCodeExpiredException
                     ("Code " + code + " expired a new one has been already sent");
         }
@@ -80,11 +82,11 @@ public class AuthenticationService {
         recoveryRepo.save(recoveryCode);
     }
 
-    public void demandRecovery(String email)
+    public void demandRecovery(EmailRequest req)
             throws MessagingException {
-        User concernedUser = userRepo.findByEmail(email).
+        User concernedUser = userRepo.findByEmail(req.getEmail()).
                 orElseThrow(() -> new UserNotFoundException
-                        ("Email " + email + " doesn't concern any existing user..."));
+                        ("Email " + req.getEmail() + " doesn't concern any existing user..."));
         String recoveryCode = generateAndSaveRecoveryCode(concernedUser);
         emailService.sendEmail(
                 concernedUser.getEmail(),

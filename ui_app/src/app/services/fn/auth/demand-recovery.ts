@@ -8,16 +8,17 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { EmailRequest } from '../../models/email-request';
 
 export interface DemandRecovery$Params {
-  email: string;
+      body: EmailRequest
 }
 
 export function demandRecovery(http: HttpClient, rootUrl: string, params: DemandRecovery$Params, context?: HttpContext): Observable<StrictHttpResponse<{
 }>> {
   const rb = new RequestBuilder(rootUrl, demandRecovery.PATH, 'post');
   if (params) {
-    rb.query('email', params.email, {});
+    rb.body(params.body, 'application/json');
   }
 
   return http.request(
