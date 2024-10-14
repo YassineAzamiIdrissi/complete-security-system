@@ -8,7 +8,7 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car, Integer> {
     @Query("""
                    SELECT car FROM Car car
-                   WHERE car.owner != :userId
+                   WHERE car.owner.id != :userId
             """)
     List<Car> findCars(Integer userId);
 }

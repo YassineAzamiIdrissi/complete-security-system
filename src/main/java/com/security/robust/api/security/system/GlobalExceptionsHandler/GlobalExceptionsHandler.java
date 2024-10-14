@@ -122,4 +122,12 @@ public class GlobalExceptionsHandler {
         return ResponseEntity.status(400).
                 body(resp);
     }
+
+    @ExceptionHandler(Exception.class)
+    ResponseEntity<ExceptionResp> handleException(Exception exp) {
+        ExceptionResp resp = new ExceptionResp();
+        resp.setMessage(exp.getMessage());
+        return ResponseEntity.status(500).
+                body(resp);
+    }
 }

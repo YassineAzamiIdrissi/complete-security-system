@@ -33,7 +33,7 @@ application:
   security:
     jwt:
       secret-key: Zmxld2RvZXNlbGV2ZW5ibGFua2JpdGRpZ2JhdHRsZWZpeHdvdWxkZGl2aWRlZm9ncGk=
-      expiration: 86400
+      expiration: 864000
   links:
     recovery: http://localhost:4200/recover-pass
     activation: http://localhost:4200/activate-account

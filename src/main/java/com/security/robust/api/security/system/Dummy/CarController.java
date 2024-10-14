@@ -9,22 +9,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+@RequestMapping("cars")
 @Tag(name = "car")
-@RequestMapping(name = "cars")
+@RequiredArgsConstructor
 public class CarController {
     private final CarService carService;
 
-    @PostMapping("")
+    @PostMapping
     ResponseEntity<Integer> addCar
             (@RequestBody CarRequest carRequest,
              Authentication authentication) {
+        System.out.println("CONTROLLER CALLED");
         return ResponseEntity.ok().
                 body(carService.createCar(authentication, carRequest));
     }
 
-    @GetMapping("")
+    @GetMapping
     ResponseEntity<List<CarResponse>> getAllCars(Authentication authentication) {
+        System.out.println("CONTROLLER CALLED");
         return ResponseEntity.ok().
                 body(carService.readAllCars(authentication));
     }
