@@ -8,7 +8,6 @@ import com.security.robust.api.security.system.CustomExceptions.*;
 import com.security.robust.api.security.system.Email.EmailService;
 import com.security.robust.api.security.system.RecoveryCode.RecoveryCode;
 import com.security.robust.api.security.system.RecoveryCode.RecoveryCodeRepository;
-import com.security.robust.api.security.system.Security.JwtFilter;
 import com.security.robust.api.security.system.Security.JwtService;
 import com.security.robust.api.security.system.User.User;
 import com.security.robust.api.security.system.User.UserRepository;
@@ -43,7 +42,6 @@ public class AuthenticationService {
 
     private final JwtService jwtService;
     private final EmailService emailService;
-    private final JwtFilter jwtFilter;
 
     @Value("${application.links.recovery}")
     private String recoveryLink;

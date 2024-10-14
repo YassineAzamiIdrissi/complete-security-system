@@ -3,7 +3,6 @@ package com.security.robust.api.security.system.GlobalExceptionsHandler;
 import com.security.robust.api.security.system.CustomExceptions.*;
 import com.security.robust.api.security.system.GlobalExceptionsHandler.ExceptionResponseDto.ExceptionResp;
 import jakarta.mail.MessagingException;
-import lombok.Locked;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -40,7 +39,7 @@ public class GlobalExceptionsHandler {
     ResponseEntity<ExceptionResp> handleActivationCodeNotFoundException
             (ActivationCodeNotFoundException exp) {
         ExceptionResp resp = new ExceptionResp();
-        resp.setMessage("Something went wrong in the mailing service inside the sever..");
+        resp.setMessage(exp.getMessage());
         return ResponseEntity.status(404).
                 body(resp);
     }

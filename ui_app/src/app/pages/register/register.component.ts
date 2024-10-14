@@ -29,9 +29,13 @@ export class RegisterComponent {
     this.authService.register({
       'body': this.registerRequest
     }).subscribe({
-      next: (resp) => {
+      next: () => {
         // going to the account activation page...
-        this.router.navigate(['login']);
+        this.router.navigate(['activate-account'], {
+          queryParams: {
+            email: this.registerRequest.email
+          }
+        });
       },
       error: (err) => {
         if (err.error.errors) {
@@ -50,6 +54,5 @@ export class RegisterComponent {
   moveToLogin() {
     this.router.navigate(['login']);
   }
-
 
 }
