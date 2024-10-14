@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -123,11 +124,20 @@ public class GlobalExceptionsHandler {
                 body(resp);
     }
 
-    @ExceptionHandler(Exception.class)
-    ResponseEntity<ExceptionResp> handleException(Exception exp) {
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    ResponseEntity<ExceptionResp> handleSQLIntegrityConstraintViolationException(
+            SQLIntegrityConstraintViolationException exp
+    ) {
         ExceptionResp resp = new ExceptionResp();
-        resp.setMessage(exp.getMessage());
-        return ResponseEntity.status(500).
+        resp.setMessage("This email is already used by another user !");
+        return ResponseEntity.status(403).
                 body(resp);
     }
+//    @ExceptionHandler(Exception.class)
+//    ResponseEntity<ExceptionResp> handleException(Exception exp) {
+//        ExceptionResp resp = new ExceptionResp();
+//        resp.setMessage(exp.getMessage());
+//        return ResponseEntity.status(500).
+//                body(resp);
+//    }
 }

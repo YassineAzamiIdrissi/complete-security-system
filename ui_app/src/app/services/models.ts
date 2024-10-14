@@ -4,5 +4,7 @@
 
 export { AuthenticationRequest } from './models/authentication-request';
 export { AuthenticationResponse } from './models/authentication-response';
+export { CarRequest } from './models/car-request';
+export { CarResponse } from './models/car-response';
 export { NewPasswordCouple } from './models/new-password-couple';
 export { RegistrationRequest } from './models/registration-request';

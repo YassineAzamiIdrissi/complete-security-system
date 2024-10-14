@@ -1,0 +1,57 @@
+<div class="center-wrapper">
+  <form class="form-shadow">
+    <div class="alert alert-danger" role="alert" *ngIf="errors.length">
+      <p class="m-0 p-0" *ngFor="let error of errors">
+        {{ error }}
+      </p>
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+      <p class="m-0 p-0">
+        {{ errorMessage }}
+      </p>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputFirstname1" class="form-label">Firstname</label>
+      <input type="text" class="form-control"
+             id="exampleInputFirstname1"
+             aria-describedby="emailHelp"
+             [(ngModel)]="registerRequest.firstname"
+             name="fn_inp"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputLastName1" class="form-label">Lastname</label>
+      <input type="text" class="form-control"
+             id="exampleInputLastName1"
+             aria-describedby="emailHelp"
+             [(ngModel)]="registerRequest.lastname"
+             name="ln_inp"
+      >
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="email" class="form-control"
+             id="exampleInputEmail1"
+             aria-describedby="emailHelp"
+             [(ngModel)]="registerRequest.email"
+             name="email_inp"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control"
+             id="exampleInputPassword1"
+             [(ngModel)]="registerRequest.password"
+             name="pswd_inp">
+    </div>
+    <div class="mb-3 d-flex align-items-center justify-content-between">
+      <button class="btn btn-primary" (click)="register()">
+        Create account
+      </button>
+      <button class="btn btn-link"
+              (click)="moveToLogin()">Already have an account login
+      </button>
+    </div>
+  </form>
+</div>

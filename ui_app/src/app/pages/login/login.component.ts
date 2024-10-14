@@ -32,7 +32,7 @@ export class LoginComponent {
       {
         next: (resp) => {
           this.tokenService.token = resp.accessToken as string;
-          
+
         },
         error: (err) => {
           console.log(err);
@@ -47,5 +47,9 @@ export class LoginComponent {
           }, 3000);
         }
       })
+  }
+
+  moveToRegister() {
+    this.router.navigate(["register"]);
   }
 }
