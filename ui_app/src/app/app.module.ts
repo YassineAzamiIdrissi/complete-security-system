@@ -5,13 +5,15 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './pages/login/login.component';
 import {FormsModule} from "@angular/forms";
-import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import { RegisterComponent } from './pages/register/register.component';
-import { ActivateAccountComponent } from './pages/activate-account/activate-account.component';
+import {provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
+import {RegisterComponent} from './pages/register/register.component';
+import {ActivateAccountComponent} from './pages/activate-account/activate-account.component';
 import {CodeInputModule} from "angular-code-input";
-import { PasswordRecoveryDemandComponent } from './pages/password-recovery-demand/password-recovery-demand.component';
-import { CheckRecoveryComponent } from './pages/check-recovery/check-recovery.component';
-import { SetNewPassComponent } from './pages/set-new-pass/set-new-pass.component';
+import {PasswordRecoveryDemandComponent} from './pages/password-recovery-demand/password-recovery-demand.component';
+import {CheckRecoveryComponent} from './pages/check-recovery/check-recovery.component';
+import {SetNewPassComponent} from './pages/set-new-pass/set-new-pass.component';
+import {MainPageComponent} from './pages/main-page/main-page.component';
+import {tokenInterceptor} from "./services/interceptor/token.interceptor"
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { SetNewPassComponent } from './pages/set-new-pass/set-new-pass.component
     ActivateAccountComponent,
     PasswordRecoveryDemandComponent,
     CheckRecoveryComponent,
-    SetNewPassComponent
+    SetNewPassComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,11 @@ import { SetNewPassComponent } from './pages/set-new-pass/set-new-pass.component
     CodeInputModule
   ],
   providers: [
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient
+    (
+      withInterceptorsFromDi(),
+      withInterceptors([tokenInterceptor])
+    )
   ],
   bootstrap: [AppComponent]
 })

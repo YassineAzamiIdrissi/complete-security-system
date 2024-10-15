@@ -9,6 +9,8 @@ export class TokenService {
   }
 
   set token(token: string) {
+    console.log("Setter called");
+    console.log(token);
     localStorage.setItem('token', token);
   }
 
@@ -31,10 +33,10 @@ export class TokenService {
       return false;
     }
     const jwtHelper = new JwtHelperService();
-    if (!jwtHelper.isTokenExpired(token)) {
+    if (jwtHelper.isTokenExpired(token)) {
       localStorage.removeItem('token');
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 }
