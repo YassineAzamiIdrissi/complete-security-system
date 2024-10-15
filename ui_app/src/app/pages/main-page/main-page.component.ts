@@ -39,5 +39,4 @@ export class MainPageComponent implements OnInit {
     localStorage.removeItem("token");
     this.router.navigate(["login"]);
   }
-
 }
