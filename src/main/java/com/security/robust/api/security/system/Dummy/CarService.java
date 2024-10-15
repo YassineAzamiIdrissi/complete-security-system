@@ -15,8 +15,7 @@ public class CarService {
 
     List<CarResponse> readAllCars(Authentication auth) {
         System.out.println("SERVICE CALLED");
-        User user = (User) auth.getPrincipal();
-        List<Car> cars = carRepo.findCars(user.getId());
+        List<Car> cars = carRepo.findCars(auth.getName());
         return cars.stream().
                 map(carMapper::carToResponse).
                 toList();
@@ -24,9 +23,8 @@ public class CarService {
 
     Integer createCar(Authentication auth, CarRequest carRequest) {
         System.out.println("SERVICE CALLED");
-        User user = (User) auth.getPrincipal();
         Car car = carMapper.requestToCar(carRequest);
-        car.setOwner(user);
+        car.setCreatedBy(auth.getName());
         return carRepo.save(car).getId();
     }
 }

@@ -1,7 +1,5 @@
 package com.security.robust.api.security.system.CustomExceptions;
 
-public class AuthorityNotFoundException extends RuntimeException {
-    public AuthorityNotFoundException(String message) {
-        super(message);
-    }
+// you are in Keycloak branch, this class doesn't make sens anymore
+public class AuthorityNotFoundException {
 }
