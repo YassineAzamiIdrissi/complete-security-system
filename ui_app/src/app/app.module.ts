@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -14,6 +14,11 @@ import {CheckRecoveryComponent} from './pages/check-recovery/check-recovery.comp
 import {SetNewPassComponent} from './pages/set-new-pass/set-new-pass.component';
 import {MainPageComponent} from './pages/main-page/main-page.component';
 import {tokenInterceptor} from "./services/interceptor/token.interceptor"
+import {KeycloakService} from "./services/keycloak/keycloak.service";
+
+export function KcFactory(kcService: KeycloakService) {
+  return () => kcService.init();
+}
 
 @NgModule({
   declarations: [
@@ -37,7 +42,13 @@ import {tokenInterceptor} from "./services/interceptor/token.interceptor"
     (
       withInterceptorsFromDi(),
       withInterceptors([tokenInterceptor])
-    )
+    ),
+    {
+      provide: APP_INITIALIZER,
+      deps: [KeycloakService],
+      useFactory: KcFactory,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

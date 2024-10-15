@@ -3,6 +3,8 @@ import {CarService} from "../../services/services/car.service";
 import {CarResponse} from "../../services/models/car-response";
 import {TokenService} from "../../services/token/token.service";
 import {Router} from "@angular/router";
+import {KeycloakService} from "../../services/keycloak/keycloak.service";
+import Keycloak from "keycloak-js";
 
 @Component({
   selector: 'app-main-page',
@@ -14,13 +16,15 @@ export class MainPageComponent implements OnInit {
   username: string = "";
 
   constructor(private carService: CarService,
-              private tokenService: TokenService,
+              private kcService: KeycloakService,
               private router: Router) {
   }
 
   ngOnInit() {
-    const details = this.tokenService.decodePayLoad();
-    this.username = details?.fullName;
+    const details = (this.kcService.keycloak as Keycloak).tokenParsed;
+    if (details && details["name"]) {
+      this.username = details["name"];
+    }
     this.fetchCars();
   }
 
@@ -36,7 +40,6 @@ export class MainPageComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem("token");
-    this.router.navigate(["login"]);
+    this.kcService.keycloak?.logout();
   }
 }
