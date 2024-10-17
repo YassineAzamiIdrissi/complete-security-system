@@ -31,7 +31,7 @@ public class EmailService {
     ) throws MessagingException {
         String templateName;
         if (template == null) {
-            templateName = "activate_account";
+            templateName = "recover_password";
         } else {
             templateName = template.getName();
         }
