@@ -24,7 +24,18 @@ services:
     networks:
       - app-network
     restart: unless-stopped
-
+  kc-service:
+    container_name: kc_container
+    image: quay.io/keycloak/keycloak:24.0.2
+    ports:
+      - 9090:8080
+    networks:
+      - app-network
+    restart: unless-stopped
+    command: "start-dev"
+    environment:
+      KEYCLOAK_ADMIN: yassine
+      KEYCLOAK_ADMIN_PASSWORD: password
 volumes:
   postgres:
 

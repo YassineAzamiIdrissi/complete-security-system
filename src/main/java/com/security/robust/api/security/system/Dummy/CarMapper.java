@@ -17,7 +17,7 @@ public class CarMapper {
         return CarResponse.builder().
                 car(car.getName()).
                 description(car.getDescription()).
-                ownerFullName(car.getOwner().generateFullName()).
+                // ownerFullName(car.getOwner().generateFullName()).
                 prodYear(car.getProdYear()).
                 build();
     }

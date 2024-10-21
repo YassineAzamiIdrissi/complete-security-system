@@ -3,6 +3,7 @@ import {CarService} from "../../services/services/car.service";
 import {CarResponse} from "../../services/models/car-response";
 import {TokenService} from "../../services/token/token.service";
 import {Router} from "@angular/router";
+import {KeycloakService} from "../../keycloak/keycloak.service";
 
 @Component({
   selector: 'app-main-page',
@@ -15,7 +16,8 @@ export class MainPageComponent implements OnInit {
 
   constructor(private carService: CarService,
               private tokenService: TokenService,
-              private router: Router) {
+              private router: Router,
+              private kcService: KeycloakService) {
   }
 
   ngOnInit() {
@@ -36,8 +38,7 @@ export class MainPageComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem("token");
-    this.router.navigate(["login"]);
+    this.kcService.logout();
   }
 
 }
