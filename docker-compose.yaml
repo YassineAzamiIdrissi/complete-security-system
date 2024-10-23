@@ -24,7 +24,26 @@ services:
     networks:
       - app-network
     restart: unless-stopped
-
+  app_api:
+    container_name: back_side
+    image: security_system1.0.3:latest
+    ports:
+      - 8088:8088
+    restart: unless-stopped
+    networks:
+      - app-network
+    depends_on:
+      - storage-service
+  app-front:
+    image: security_system_front:latest
+    container_name: front_app
+    ports:
+      - 8080:80
+    restart: unless-stopped
+    networks:
+      - app-network
+    depends_on:
+      - app_api
 volumes:
   postgres:
 

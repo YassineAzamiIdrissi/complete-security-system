@@ -43,6 +43,7 @@ export class RegisterComponent {
         } else {
           this.errorMessage = err.error.message;
         }
+        console.log(err);
         setTimeout(() => {
           this.errors = [];
           this.errorMessage = "";

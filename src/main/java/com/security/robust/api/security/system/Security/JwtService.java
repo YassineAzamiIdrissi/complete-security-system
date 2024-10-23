@@ -79,7 +79,7 @@ public class JwtService {
                 setClaims(extraClaims).
                 setSubject(userDetails.getUsername()).
                 setIssuedAt(new Date(currentTimeMillis())).
-                setExpiration(new Date(currentTimeMillis()+jwtExp)).
+                setExpiration(new Date(currentTimeMillis() + jwtExp)).
                 signWith(generateSignInKey()).
                 claim("authorities", auths).
                 compact();

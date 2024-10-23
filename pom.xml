@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.security</groupId>
     <artifactId>robust.api.security.system</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.3</version>
     <name>robust.api.security.system</name>
     <description>This project is an implementation of famous Api security approaches using JWT as well as Keycloak
     </description>

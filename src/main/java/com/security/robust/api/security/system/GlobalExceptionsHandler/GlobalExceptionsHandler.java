@@ -31,6 +31,9 @@ public class GlobalExceptionsHandler {
     ResponseEntity<ExceptionResp> handleMessagingException(MessagingException exp) {
         ExceptionResp resp = new ExceptionResp();
         resp.setMessage("Something went wrong in the mailing service inside the sever..");
+        System.out.println(exp.getMessage());
+        System.out.println(exp.getCause());
+        System.out.println(exp.getStackTrace());
         return ResponseEntity.status(500).
                 body(resp);
     }
